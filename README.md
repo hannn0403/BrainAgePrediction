@@ -4,7 +4,8 @@
 **Juhyuk Han, Seo Yeong Kim, Junhyeok Lee and Won Hee Lee**
 
 
-https://www.mdpi.com/1424-8220/22/20/8077
+Sensors 2022, 22(20), 8077; https://doi.org/10.3390/s22208077
+
 
 
 ### Abstract
