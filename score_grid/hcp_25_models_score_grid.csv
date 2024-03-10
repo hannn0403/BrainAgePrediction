@@ -1,0 +1,26 @@
+,Model,MAE,MSE,RMSE,R2,RMSLE,MAPE,TT (Sec)
+ard,Automatic Relevance Determination,2.6721,10.7403,3.2744,0.2148,0.1118,0.095,63.5
+br,Bayesian Ridge,2.7019,10.8213,3.2876,0.209,0.1121,0.0962,2.998
+ridge,Ridge Regression,2.7396,11.4886,3.3864,0.1602,0.1153,0.0972,0.128
+lr,Linear Regression,2.7431,11.5186,3.3908,0.158,0.1154,0.0973,1.264
+catboost,CatBoost Regressor,2.7474,11.0728,3.3257,0.1905,0.1135,0.098,16.089
+svm,Support Vector Regression,2.7484,11.2466,3.3506,0.1779,0.1145,0.0981,0.154
+gbr,Gradient Boosting Regressor,2.757,11.3166,3.3611,0.1727,0.1148,0.0984,3.666
+rf,Random Forest Regressor,2.7715,11.3064,3.3607,0.1732,0.1149,0.0991,1.62
+et,Extra Trees Regressor,2.7732,11.298,3.3599,0.1739,0.1148,0.0991,1.511
+tr,TheilSen Regressor,2.7882,12.0558,3.4678,0.1188,0.118,0.099,15.474
+huber,Huber Regressor,2.791,12.027,3.4625,0.121,0.1178,0.0989,3.466
+omp,Orthogonal Matching Pursuit,2.8439,11.929,3.4522,0.1276,0.1178,0.1015,0.048
+ada,AdaBoost Regressor,2.8494,12.0145,3.4646,0.1215,0.1183,0.1017,1.395
+lightgbm,Light Gradient Boosting Machine,2.8599,12.0781,3.4734,0.1167,0.1184,0.102,315.061
+xgboost,Extreme Gradient Boosting,2.8681,12.0898,3.4743,0.1157,0.1184,0.1019,1.546
+lar,Least Angle Regression,2.9314,12.8863,3.5868,0.0576,0.1221,0.1038,0.15
+knn,K Neighbors Regressor,2.9766,13.0586,3.6103,0.0453,0.1232,0.1068,0.108
+en,Elastic Net,2.9822,12.6419,3.5552,0.0755,0.1216,0.1067,0.049
+lasso,Lasso Regression,3.1211,13.6773,3.6982,-0.0003,0.1264,0.1118,0.061
+llar,Lasso Least Angle Regression,3.1212,13.6778,3.6982,-0.0003,0.1264,0.1118,0.041
+par,Passive Aggressive Regressor,3.6865,20.483,4.5033,-0.4964,0.1541,0.1302,0.056
+dt,Decision Tree Regressor,3.7989,22.5337,4.7366,-0.6469,0.1614,0.1348,0.119
+mlp,MLP Regressor,4.2899,29.5177,5.4166,-1.1591,0.1885,0.1494,136.763
+ransac,Random Sample Consensus,10.8051,189.3687,13.47,-12.864,0.6142,0.382,89.979
+kr,Kernel Ridge,34.8907,1258.7357,35.4719,-91.0493,1.7276,1.222,0.254
