@@ -1,0 +1,13 @@
+paths:
+  datapath : C:/Users/HYUK/Desktop/Brain_Age_Revision_SHAP/data/
+  results : C:/Users/HYUK/Desktop/Brain_Age_Revision_SHAP/results/
+  genpath : C:/Users/HYUK/Desktop/Brain_Age_Revision_SHAP/data/generated_data/
+
+data:
+  parcellation : CAMCAN
+
+preproc:
+  combat : no
+  regress : no
+  pca : no
+  pca_comps : .9 # int, for number of components, or 0<float<1 for % variance
