@@ -1,0 +1,8 @@
+Shapy value 코드 
+
+1. Subject, Age 형식 맞추기 
+2. run_brain_age_+models.py 코드를 실행하면 됨
+	59 line : csv 파일 명 수정 
+	96 line : subject 수 맞춰서 
+	yaml file : 디렉토리 수정 
+	
