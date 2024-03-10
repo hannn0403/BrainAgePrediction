@@ -1,7 +1,7 @@
 # Brain Age Prediction: A Comparison between Machine Learning Models Using Brain Morphometric Data
 
 
-**Brain Age Prediction: A Comparison between Machine Learning Models Using Brain Morphometric Data**
+### Brain Age Prediction: A Comparison between Machine Learning Models Using Brain Morphometric Data
 
 **Juhyuk Han,Seo Yeong Kim,Junhyeok Lee andWon Hee Lee**
 
