@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 import pandas as pd
 
@@ -9,7 +10,22 @@ from functions.models import get_model_explanations, get_age_corrected_model_exp
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import r2_score, mean_absolute_error
 
+DATASET_CONFIG = {
+    'hcp': {'train_file': 'hcp_train.csv', 'n_subs': 890},
+    'cc':  {'train_file': 'cc_train.csv',  'n_subs': 500},
+    'ixi': {'train_file': 'ixi_train.csv', 'n_subs': 453},
+}
+
 def main():
+    parser = argparse.ArgumentParser(description='Run brain age prediction models.')
+    parser.add_argument('--dataset', type=str, required=True, choices=['hcp', 'cc', 'ixi'],
+                        help='Dataset to use: hcp, cc, or ixi')
+    args = parser.parse_args()
+
+    dataset_cfg = DATASET_CONFIG[args.dataset]
+    train_file = dataset_cfg['train_file']
+    n_subs = dataset_cfg['n_subs']
+
     #####################################################################################################
     # CONFIG
     # load configuration file and set parameters accordingly
@@ -52,7 +68,7 @@ def main():
     print('---------------------------------------------------------')
 
     # load age, sex, site data
-    subject_data = pd.read_csv(datapath + 'cc_train.csv')
+    subject_data = pd.read_csv(datapath + train_file)
     print(subject_data)
 
 
@@ -61,7 +77,6 @@ def main():
     #####################################################################################################
     # some variables for later
 
-    n_subs = 890
     n_features = 153
     num_of_models = 3
     num_folds = 5
@@ -86,7 +101,7 @@ def main():
         train_y, test_y = subject_data.Age[train_idx], subject_data.Age[test_idx]
 
         train_x, test_x = subject_data.drop(['Age','Subject'], axis = 1), subject_data.drop(['Age','Subject'], axis = 1)
-        
+
         train_x = train_x.loc[train_idx]
         test_x = test_x.loc[test_idx]
 
@@ -145,8 +160,7 @@ def main():
             feature_explanations[m, test_idx, :] = test_model_explanations
             fold_feature_explanations[m, test_idx, :, n] = test_model_explanations
             fold_feature_explanations[m, train_idx, :, n] = train_model_explanations
-'''
-            
+            '''
 
 
     #####################################################################################################
@@ -156,7 +170,7 @@ def main():
     print('compiling results')
     print('---------------------------------------------------------')
     # collate data
-    preds = pd.DataFrame(np.hstack((preds, uncorr_preds)), columns = ['linear_preds', 'nonlinear_preds', 'ensemble_preds','linear_uncorr_preds', 'nonlinear_uncorr_preds', 'ensemble_uncorr_preds']) 
+    preds = pd.DataFrame(np.hstack((preds, uncorr_preds)), columns = ['linear_preds', 'nonlinear_preds', 'ensemble_preds','linear_uncorr_preds', 'nonlinear_uncorr_preds', 'ensemble_uncorr_preds'])
     fold = pd.DataFrame(fold.astype(int), columns=['fold'])
     predictions = pd.concat((subject_data, fold, preds), axis=1)
 
@@ -165,7 +179,7 @@ def main():
     print('')
     predictions.to_csv('{:}model_predictions-{:}-{:}-{:}-{:}.csv'.format(outpath, run_combat, regress, run_pca, parc), index=False)
 
-    # accuracies 
+    # accuracies
     n_fold = len(np.unique(predictions.fold))
     models = ['linear', 'nonlinear', 'ensemble']
 
@@ -194,7 +208,7 @@ def main():
     print('')
 '''
     # explanations
-    for m, model_name in enumerate(['linear','nonlinear', 'ensemble']): 
+    for m, model_name in enumerate(['linear','nonlinear', 'ensemble']):
         exp = pd.DataFrame(feature_explanations[m])
         fold = pd.DataFrame(fold.astype(int), columns=['fold'])
         feat_exp = pd.concat((subject_data, fold, exp), axis=1)

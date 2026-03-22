@@ -96,52 +96,52 @@ Each CSV contains 153 cortical morphometric features (parcellated brain regions)
 
 ```
 BrainAgePrediction/
-├── SHAP/                           # Model training, evaluation, and SHAP analysis scripts
-│   ├── config.yaml                 # Paths and preprocessing/model hyperparameters
-│   ├── run_brain_age_models_hcp.py # Train & evaluate on HCP dataset
-│   ├── run_brain_age_models_camcan.py # Train & evaluate on Cam-CAN dataset
-│   ├── run_brain_age_models_ixi.py    # Train & evaluate on IXI dataset
-│   ├── feature_importance_shap.py  # Unified SHAP explanation script (dataset + model args)
-│   ├── feature_importance_optimize.py # Unified optimal feature count search script
-│   ├── results/                    # SHAP values and feature explanations
-│   └── shapy value 구할때...txt       # Notes on modifying dataset paths for SHAP
-├── dataset/                        # Pre-split CSV files for each dataset
+├── SHAP/                              # Model training, evaluation, and SHAP analysis
+│   ├── config.yaml                    # Paths and preprocessing/model hyperparameters
+│   ├── config.yaml.example            # Template config with relative paths
+│   ├── run_brain_age_models.py        # Train & evaluate models (--dataset hcp|cc|ixi)
+│   ├── feature_importance_shap.py     # SHAP explanations (--dataset + --model args)
+│   ├── feature_importance_optimize.py # Optimal feature count search (--dataset + --model)
+│   ├── feature_importance_optimizing.py # Feature importance optimization analysis
+│   ├── run_deconfound_data.py         # Deconfounding analysis
+│   ├── run_explanation_correlations.py # Explanation correlation analysis
+│   ├── run_surrogates.py              # Surrogate map analysis
+│   ├── run_variance_partition.py      # Variance partitioning analysis
+│   └── results/                       # SHAP values and feature explanations
+├── dataset/                           # Pre-split CSV files for each dataset
 │   ├── hcp_train.csv / hcp_test.csv
 │   ├── cc_train.csv / cc_test.csv
 │   └── ixi_train.csv / ixi_test.csv
-├── models/                         # Saved trained model artifacts
-│   ├── hcp/best_model/             # Best model for HCP (e.g., Ridge.pkl)
-│   ├── cc/best_model/              # Best model for Cam-CAN
-│   └── ixi/best_model/             # Best model for IXI
-├── preprocessing/                  # Data processing notebooks and folders
-│   ├── CAMCAN_153/                 # Parcellated & processed Cam-CAN data
-│   ├── HCP_153/                    # Parcellated & processed HCP data
-│   ├── IXI_153/                    # Parcellated & processed IXI data
-│   ├── Age_range.ipynb             # Define age ranges & overview
-│   ├── Data_Column_check.ipynb     # Verify dataset columns
-│   └── Data_Feature_select_and_Splitting.ipynb # Feature selection & CV splits
-├── results/                        # Aggregated test predictions & metrics
-│   ├── hcp_test_sg_model.csv
-│   ├── cc_test_sg_model.csv
-│   ├── ixi_test_sg_model.csv
+├── models/                            # Saved trained model artifacts
+│   ├── hcp/best_model/
+│   ├── cc/best_model/
+│   └── ixi/best_model/
+├── preprocessing/                     # Data processing scripts
+│   ├── CAMCAN_153/ / HCP_153/ / IXI_153/  # Parcellated data
+│   ├── age_range.py                   # Age range analysis & overview
+│   ├── data_column_check.py           # Dataset column verification
+│   └── data_feature_select_and_splitting.py # Feature selection & train/test splits
+├── results/                           # Aggregated test predictions & metrics
+│   ├── hcp_test_sg_model.csv / cc_test_sg_model.csv / ixi_test_sg_model.csv
 │   ├── integrated_test_sg.csv
-│   ├── Integrated_Score_grid.ipynb # Score grid aggregation notebook
-│   ├── Additional_metrics.ipynb    # Additional evaluation metrics notebook
-│   └── score_grid/                 # Grid search performance results
-├── Visualization/                  # Plotting scripts & saved figures
-│   ├── Predicted Brain Age/        # Predicted vs. chronological plots
-│   ├── Feature Importance/         # SHAP summary & importance plots
-│   ├── bias_correction_delta_plot_*/ # Bias correction visualizations per dataset
-│   ├── brain_gap_violin_plot/      # Brain-age gap violin plots
-│   ├── violin_plot/                # Distribution comparisons
-│   ├── brainage_viz_enigmatoolbox.ipynb  # Brain visualization with ENIGMA toolbox
-│   ├── ml_alg_comparing_and_viz.ipynb   # ML algorithm comparison plots
-│   └── predicted_age_viz_and_violin_plot.ipynb # Predicted age & violin plots
-├── brain_age_prediction_training.ipynb # End-to-end training & evaluation notebook
-├── brain_age_prediction_tuning.ipynb   # Hyperparameter tuning & analysis notebook
-├── requirements.txt                # Python dependencies
-├── LICENSE                         # MIT License
-└── README.md                       # This file
+│   ├── integrated_score_grid.py       # Score grid aggregation
+│   ├── additional_metrics.py          # Additional evaluation metrics
+│   └── score_grid/                    # Grid search performance results
+├── Visualization/                     # Plotting scripts & saved figures
+│   ├── Predicted Brain Age/           # Predicted vs. chronological plots
+│   ├── Feature Importance/            # SHAP summary & importance plots
+│   ├── bias_correction_delta_plot_*/  # Bias correction plots per dataset
+│   ├── brain_gap_violin_plot/         # Brain-age gap violin plots
+│   ├── brainage_viz_enigmatoolbox.py  # Brain surface visualization (ENIGMA)
+│   ├── ml_alg_comparing_and_viz.py    # ML algorithm comparison plots
+│   └── predicted_age_viz_and_violin_plot.py # Predicted age & violin plots
+├── brain_age_prediction_training.py   # End-to-end training & evaluation
+├── brain_age_prediction_tuning.py     # Hyperparameter tuning & analysis
+├── validate_pipeline.py              # Data & pipeline integrity checks
+├── requirements.txt                   # Python dependencies
+├── .gitignore                         # Git ignore rules
+├── LICENSE                            # MIT License
+└── README.md                          # This file
 ```
 
 ## Data Preparation
@@ -151,11 +151,17 @@ BrainAgePrediction/
 
 ## Preprocessing
 
-Open and execute the notebooks in `preprocessing/` to:
+Run the scripts in `preprocessing/` to:
 - Inspect and clean dataset columns
 - Define age ranges
 - Select relevant morphometric features (153 cortical regions)
 - Split data for cross-validation
+
+```bash
+python preprocessing/age_range.py
+python preprocessing/data_column_check.py
+python preprocessing/data_feature_select_and_splitting.py
+```
 
 Processed data folders (`*_153/`) will be created automatically.
 
@@ -177,18 +183,18 @@ Key aspects of the modeling pipeline:
 
 ## Model Training & Evaluation
 
-Adjust parameters in `SHAP/config.yaml`, then train and evaluate models:
+Adjust parameters in `SHAP/config.yaml`, then train and evaluate models using the unified script:
 
 ```bash
-# Example: HCP dataset
-python SHAP/run_brain_age_models_hcp.py
-# Cam-CAN dataset
-python SHAP/run_brain_age_models_camcan.py
-# IXI dataset
-python SHAP/run_brain_age_models_ixi.py
+cd SHAP/
+
+# Train & evaluate on a specific dataset
+python run_brain_age_models.py --dataset hcp
+python run_brain_age_models.py --dataset cc
+python run_brain_age_models.py --dataset ixi
 ```
 
-Each script performs 5-fold stratified CV by age group, fits linear, nonlinear, and ensemble models, applies age-correction, and outputs:
+Each run performs 5-fold stratified CV by age group, fits linear, nonlinear, and ensemble models, applies age-correction, and outputs:
 - Predictions & deltas (`model_predictions-*.csv` in `SHAP/` output path)
 - MAE & R² scores per fold
 - SHAP-based feature importance (if enabled)
@@ -288,26 +294,44 @@ python feature_importance_shap.py --dataset hcp --model gbm --opt_features 60
 
 Output: predictions CSV, MAE/R² per fold, SHAP feature explanations (`.csv` and `.npy`).
 
-## Notebook Workflow
+## Training & Tuning Scripts
 
-For an interactive demonstration, run:
+For end-to-end training and evaluation:
 
 ```bash
-jupyter notebook brain_age_prediction_training.ipynb
+# Full training pipeline (data loading, preprocessing, model fitting, evaluation)
+python brain_age_prediction_training.py
+
+# Hyperparameter tuning & analysis
+python brain_age_prediction_tuning.py
 ```
 
-This notebook walks through data loading, preprocessing, model fitting, and evaluation with inline visualizations.
+These scripts use `# %%` cell markers and can be run interactively in VS Code (Python Interactive Window).
+
+## Results Analysis
+
+```bash
+# Aggregate score grids across models and datasets
+python results/integrated_score_grid.py
+
+# Compute additional evaluation metrics
+python results/additional_metrics.py
+```
 
 ## Visualization
 
-Generate or recreate figures by running notebooks or scripts in `Visualization/`:
+Generate or recreate figures by running scripts in `Visualization/`:
 
-- Predicted vs. actual age plots
-- SHAP summary plots
-- Violin distributions of brain-age delta
-- Bias correction delta plots per dataset
-- ML algorithm comparison charts
-- Brain surface visualizations (via ENIGMA toolbox)
+```bash
+# Predicted vs. actual age plots & violin plots
+python Visualization/predicted_age_viz_and_violin_plot.py
+
+# ML algorithm comparison & feature importance heatmaps
+python Visualization/ml_alg_comparing_and_viz.py
+
+# Brain surface visualizations (requires ENIGMA toolbox)
+python Visualization/brainage_viz_enigmatoolbox.py
+```
 
 ## Troubleshooting
 
