@@ -1,0 +1,24 @@
+# Brain Age Prediction - Configuration
+# Copy this file to config.yaml and update paths for your environment
+
+paths:
+  # Path to directory containing dataset CSV files (e.g., cc_train.csv, hcp_train.csv)
+  datapath: ./dataset/
+  # Path to directory for saving model results (predictions, MAE, R2 scores)
+  results: ./results/
+  # Path to directory for saving generated data (feature explanations, fold predictions)
+  genpath: ./results/generated_data/
+
+data:
+  # Cortical parcellation scheme used (HCP, CAMCAN, or IXI)
+  parcellation: CAMCAN
+
+preproc:
+  # Whether to apply ComBat harmonization (yes/no)
+  combat: no
+  # Whether to regress out global metrics (yes/no)
+  regress: no
+  # Whether to apply PCA dimensionality reduction (yes/no)
+  pca: no
+  # Number of PCA components (int) or proportion of variance to retain (0 < float < 1)
+  pca_comps: .9

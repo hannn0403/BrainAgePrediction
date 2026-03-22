@@ -1,15 +1,11 @@
 import numpy as np
 import pandas as pd
 
-import os, glob
-from regex import P
 import yaml
 from tqdm import tqdm
 
-from functions.surfaces import load_surf_data, parcellateSurface
 from functions.models import get_ensemble_model, get_linear_model, get_nonlinear_model
 from functions.models import get_model_explanations, get_age_corrected_model_explanations, correct_age_predictions
-from functions.misc import pre_process_metrics
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import r2_score, mean_absolute_error
 
